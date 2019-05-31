@@ -27,13 +27,28 @@ app.get('/tasks', (req, res) => {
         }
     ).catch(
         error => {
-            console.log('error with select query', error);
+            console.log('error with get route', error);
             res.sendStatus(500);
         }
     )
 })
 
-
+//post route to get new task from client and insert to database
+app.post('/tasks', (req, res) => {
+    pool.query(`
+    INSERT INTO "tasks" ("task", "is_completed")
+    VALUES ($1, false);`, [req.body.task])
+    .then(
+        () => {
+            res.sendStatus(200);
+        }
+    ).catch(
+        error => {
+            console.log('error with post route', error);
+            res.sendStatus(500);
+        }
+    )
+})
 
 //server running
 app.listen(PORT, () => {
