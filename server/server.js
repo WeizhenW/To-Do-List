@@ -1,0 +1,41 @@
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const pg = require('pg');
+const Pool = pg.Pool;
+
+const PORT = 5000;
+
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(express.static('server/public'));
+
+const config = {
+    database: 'weekend-to-do-app',
+    host: 'localhost',
+    port: 5432
+};
+
+const pool = new Pool(config);
+
+//get route to retrieve all the todos from database, and send back to client
+app.get('/tasks', (req, res) => {
+    pool.query(`SELECT * FROM "tasks" ORDER BY "id";
+    `).then(
+        result => {
+            res.send(result.rows);
+        }
+    ).catch(
+        error => {
+            console.log('error with select query', error);
+            res.sendStatus(500);
+        }
+    )
+})
+
+
+
+//server running
+app.listen(PORT, () => {
+    console.log('server running on', PORT);
+})
