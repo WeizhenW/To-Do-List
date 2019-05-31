@@ -18,7 +18,7 @@ const config = {
 
 const pool = new Pool(config);
 
-//get route to retrieve all the todos from database, and send back to client
+//get route to retrieve all the tasks from database, and send back to client
 app.get('/tasks', (req, res) => {
     pool.query(`SELECT * FROM "tasks" ORDER BY "id";
     `).then(
