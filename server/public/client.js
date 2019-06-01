@@ -4,6 +4,7 @@ function onReady() {
     console.log('in jq');
     displayAllTasks();
     $('#submitNewTask').on('click', addTask);
+    $('#tasksUl').on('click', '.completeButton', completeTask);
 }
 
 //function to get all the tasks and append to the DOM
@@ -15,13 +16,25 @@ function displayAllTasks() {
         response => {
             $('#tasksUl').empty();
             response.forEach(task => {
-                $('#tasksUl').append(`
+                if(task.is_completed) {
+                    $('#tasksUl').append(`
+                    <li class="completed">
+                        ${task.task}
+                        <button class="completedButton" data-id='${task.id}' disabled   >Task Completed</button>
+                        <button class="deleteButton" data-id='${task.id}'>Delete Task</button>
+                    </li>
+                `)
+                } else {
+                    $('#tasksUl').append(`
                     <li>
                         ${task.task}
                         <button class="completeButton" data-id='${task.id}'>Task Completed</button>
                         <button class="deleteButton" data-id='${task.id}'>Delete Task</button>
                     </li>
                 `)
+                }
+              
+               
             })
         }
     )
@@ -36,6 +49,22 @@ function addTask() {
         data: {
             task: newTask
         }
+    }).then(
+        () => {
+            displayAllTasks();
+        }
+    ).catch(
+        error => {
+            console.log(error);
+        }
+    )
+}
+//function to set a task complete
+function completeTask() {
+    let idClicked = $(this).data().id;
+    $.ajax({
+        method: 'PUT',
+        url: '/tasks/'+idClicked
     }).then(
         () => {
             displayAllTasks();
