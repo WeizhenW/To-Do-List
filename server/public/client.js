@@ -1,12 +1,16 @@
 $(document).ready(onReady);
-
+//declare global variable to store the id of the task to be deleted
 let idToDelete = 0;
 
 function onReady() {
     displayAllTasks();
+    //click add task button to add new task to the table
     $('#submitNewTask').on('click', addTask);
+    //click complete button to toggle the task status
     $('#tasksTableBody').on('click', '.completeButton', completeTask);
+    //click delete button to get the id of the task
     $('#tasksTableBody').on('click', '.deleteButton', getIdToDelete);
+    //click confirm button to actually delete the task
     $('.confirmDeleteButton').on('click', deleteTask);
 }
 
@@ -19,6 +23,9 @@ function displayAllTasks() {
         response => {
             $('#tasksTableBody').empty();
             response.forEach(task => {
+                //check the status of the task
+                //if completed => text on the button will show as "completed"
+                //if not completed => text on the button will show as "to complete"
                 if(task.is_completed) {
                     $('#tasksTableBody').append(`
                     <tr>
@@ -56,7 +63,6 @@ function addTask() {
         () => {
             $('#taskIn').val('');
             displayAllTasks();
-            $('#exampleModal').modal('hide');
             
         }
     ).catch(
@@ -69,12 +75,9 @@ function addTask() {
 function completeTask() {
     let idClicked = $(this).data().id;
     let is_completed = true;
-    console.log($(this).data().complete)
     if($(this).data().complete){
-        console.log('in if')
         is_completed = false;
     } else {
-        console.log('in else')
         is_completed = true;
     }
     $.ajax({
@@ -96,10 +99,9 @@ function completeTask() {
 
 //function to delete task
 function deleteTask() {
-    // let idClicked = $(this).data().id;
     $.ajax({
         method: 'DELETE',
-        url: '/tasks/'+idToDelete
+        url: '/tasks/'+idToDelete //use the id passed by the getIdToDelete function
     }).then(
         () => {
             displayAllTasks();
@@ -111,9 +113,8 @@ function deleteTask() {
     )
 }
 
-//function to get id to delete when click the delete button
+//function to get id to delete when click the delete button and return the value
 function getIdToDelete() {
     idToDelete = $(this).data().id;
-    console.log(idToDelete);
     return idToDelete;
 }
