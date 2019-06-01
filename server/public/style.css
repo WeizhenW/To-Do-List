@@ -2,36 +2,40 @@ body, html {
     height: 100%;
 }
 
-.container {
+.jumbotron {
     background-image: url('background.jpeg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 100%;
 }
 
 .toDoBody {
     margin: 0 auto;
     width: 40%;
 }
-input {
-    font-size: 16px;
-    padding: 5px;
+#taskIn {
+    padding: 5px; 
+    width: 100%;
 }
 
-button {
-    font-size: 16px;
-    padding: 5px;
+#submitNewTask {
+    margin-top: 20px;
 }
 
-.completed {
+
+.taskCompleted {
     text-decoration: line-through;
     color: grey;
+}
+
+.disable {
+    background-color: grey;
 }
 
 table {
     border: 1px grey solid;
     margin-top: 20px;
+    width: 100%;
 
 }
 

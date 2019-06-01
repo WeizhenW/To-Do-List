@@ -4,22 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <script src="jquery-3.4.1.min.js"></script>
     <script src="client.js"></script>
     <title>To-Do-List</title>
 </head>
 <body>
-    <div class="container">
-        <div>
+    <div class="fullBody">
+        <div class="jumbotron">
             <h1>To Do List</h1>
             <p>Organize your life and stay zen!</p>
         </div>
 
         <div class="toDoBody">
             <div id="taskInput">
-                <input type="text" id="taskIn" placeholder="new task">
-                <button id="submitNewTask">Create Task</button>
+                <input type="text" id="taskIn" class="form-control" placeholder="new task">
+                <button id="submitNewTask" class="btn btn-info">Create Task</button>
             </div>
         
             <div id="tasksDiv">
