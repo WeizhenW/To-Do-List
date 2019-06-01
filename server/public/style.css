@@ -1,18 +1,26 @@
-body, html {
-    height: 100%;
-}
 
 .jumbotron {
     background-image: url('background.jpeg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    color: teal;
+    font-weight: bold;
 }
 
-.toDoBody {
-    margin: 0 auto;
-    width: 40%;
+h1 {
+    font-size: 60px;
 }
+
+#subtitle {
+    font-size: 20px;
+}
+
+#functionality {
+    /* margin-right: 10px; */
+    /* padding: 10px; */
+}
+
 #taskIn {
     padding: 5px; 
     width: 100%;
@@ -34,10 +42,19 @@ body, html {
 
 table {
     border: 1px grey solid;
-    margin-top: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     width: 100%;
 
 }
+
+tr:nth-child(even) {
+    background-color: honeydew;
+}
+
+/* tr:nth-child(odd) {
+    background-color: #FFF;
+} */
 
 td {
     padding: 10px;
