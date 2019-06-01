@@ -1,11 +1,10 @@
 $(document).ready(onReady);
 
 function onReady() {
-    console.log('in jq');
     displayAllTasks();
     $('#submitNewTask').on('click', addTask);
-    $('#tasksUl').on('click', '.completeButton', completeTask);
-    $('#tasksUl').on('click', '.deleteButton', deleteTask);
+    $('#tasksTableBody').on('click', '.completeButton', completeTask);
+    $('#tasksTableBody').on('click', '.deleteButton', deleteTask);
 }
 
 //function to get all the tasks and append to the DOM
@@ -15,23 +14,23 @@ function displayAllTasks() {
         url: '/tasks'
     }).then(
         response => {
-            $('#tasksUl').empty();
+            $('#tasksTableBody').empty();
             response.forEach(task => {
                 if(task.is_completed) {
-                    $('#tasksUl').append(`
-                    <li class="completed">
-                        ${task.task}
-                        <button class="completedButton" data-id='${task.id}' disabled   >Task Completed</button>
-                        <button class="deleteButton" data-id='${task.id}'>Delete Task</button>
-                    </li>
+                    $('#tasksTableBody').append(`
+                    <tr>
+                        <td class="completed">${task.task}</td>
+                        <td><button class="completedButton" data-id='${task.id}' disabled   >Task Completed</button></td>
+                        <td><button class="deleteButton" data-id='${task.id}'>Delete Task</button></td>
+                    </tr>
                 `)
                 } else {
-                    $('#tasksUl').append(`
-                    <li>
-                        ${task.task}
-                        <button class="completeButton" data-id='${task.id}'>Task Completed</button>
-                        <button class="deleteButton" data-id='${task.id}'>Delete Task</button>
-                    </li>
+                    $('#tasksTableBody').append(`
+                    <tr>
+                        <td>${task.task}</td>
+                        <td><button class="completeButton" data-id='${task.id}'>Task Completed</button></td>
+                        <td><button class="deleteButton" data-id='${task.id}'>Delete Task</button></td>
+                    </tr>
                 `)
                 }
               
@@ -52,7 +51,9 @@ function addTask() {
         }
     }).then(
         () => {
+            $('#taskIn').val('');
             displayAllTasks();
+            
         }
     ).catch(
         error => {

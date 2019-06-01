@@ -10,17 +10,28 @@
     <title>To-Do-List</title>
 </head>
 <body>
-    <h1>To Do List</h1>
+    <div class="container">
+        <div>
+            <h1>To Do List</h1>
+            <p>Organize your life and stay zen!</p>
+        </div>
 
-    <div id="taskInput">
-        <input type="text" id="taskIn" placeholder="new task">
-        <button id="submitNewTask">Create Task</button>
-    </div>
+        <div class="toDoBody">
+            <div id="taskInput">
+                <input type="text" id="taskIn" placeholder="new task">
+                <button id="submitNewTask">Create Task</button>
+            </div>
+        
+            <div id="tasksDiv">
 
-    <div id="tasksDiv">
-        <ul id="tasksUl">
+                <table>
+                    <tbody id="tasksTableBody">
 
-        </ul>
+                    </tbody>
+                 
+                </table>
+            </div>
+        </div>
     </div>
 </body>
 </html>

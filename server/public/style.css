@@ -1,4 +1,42 @@
+body, html {
+    height: 100%;
+}
+
+.container {
+    background-image: url('background.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+}
+
+.toDoBody {
+    margin: 0 auto;
+    width: 40%;
+}
+input {
+    font-size: 16px;
+    padding: 5px;
+}
+
+button {
+    font-size: 16px;
+    padding: 5px;
+}
+
 .completed {
-    background-color: green;
+    text-decoration: line-through;
+    color: grey;
+}
+
+table {
+    border: 1px grey solid;
+    margin-top: 20px;
+
+}
+
+td {
+    padding: 10px;
+    font-size: 18px;
 }
 
