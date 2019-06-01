@@ -1,10 +1,13 @@
 $(document).ready(onReady);
 
+let idToDelete = 0;
+
 function onReady() {
     displayAllTasks();
     $('#submitNewTask').on('click', addTask);
     $('#tasksTableBody').on('click', '.completeButton', completeTask);
-    $('#tasksTableBody').on('click', '.deleteButton', deleteTask);
+    $('#tasksTableBody').on('click', '.deleteButton', getIdToDelete);
+    $('.confirmDeleteButton').on('click', deleteTask);
 }
 
 //function to get all the tasks and append to the DOM
@@ -53,6 +56,7 @@ function addTask() {
         () => {
             $('#taskIn').val('');
             displayAllTasks();
+            $('#exampleModal').modal('hide');
             
         }
     ).catch(
@@ -92,10 +96,10 @@ function completeTask() {
 
 //function to delete task
 function deleteTask() {
-    let idClicked = $(this).data().id;
+    // let idClicked = $(this).data().id;
     $.ajax({
         method: 'DELETE',
-        url: '/tasks/'+idClicked
+        url: '/tasks/'+idToDelete
     }).then(
         () => {
             displayAllTasks();
@@ -105,4 +109,11 @@ function deleteTask() {
             console.log(error);
         }
     )
+}
+
+//function to get id to delete when click the delete button
+function getIdToDelete() {
+    idToDelete = $(this).data().id;
+    console.log(idToDelete);
+    return idToDelete;
 }
