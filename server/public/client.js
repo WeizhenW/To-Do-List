@@ -1,27 +1,32 @@
 $(document).ready(onReady);
 //declare global variable to store the id of the task to be deleted
 let idToDelete = 0;
+let orderEntered = 'DESC';
 
 function onReady() {
     displayAllTasks();
-    //click add task button to add new task to the table
+    //button click to add task button to add new task to the table
     $('#submitNewTask').on('click', addTask);
-    //click complete button to toggle the task status
+    //button click to complete button to toggle the task status
     $('#tasksTableBody').on('click', '.completeButton', completeTask);
-    //click delete button to get the id of the task
+    //button click to delete button to get the id of the task
     $('#tasksTableBody').on('click', '.deleteButton', getIdToDelete);
-    //click confirm button to actually delete the task
+    //button click to actually delete the task
     $('.confirmDeleteButton').on('click', deleteTask);
+    //button click to change the order of the display
+    $('#submitOrder').on('click', newDisplayOrder);
 }
 
 //function to get all the tasks and append to the DOM
 function displayAllTasks() {
     $.ajax({
         method: 'GET',
-        url: '/tasks'
+        url: '/tasks?order=' + orderEntered
     }).then(
         response => {
             $('#tasksTableBody').empty();
+            // let order=$('.radioInput').val();
+            // console.log(order);
             response.forEach(task => {
                 //check the status of the task
                 //if completed => text on the button will show as "completed"
@@ -117,4 +122,10 @@ function deleteTask() {
 function getIdToDelete() {
     idToDelete = $(this).data().id;
     return idToDelete;
+}
+
+//function to switch a new display order and reload the page
+function newDisplayOrder() {
+    orderEntered = $("input[name='order']:checked").val();
+    displayAllTasks();
 }

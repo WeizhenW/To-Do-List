@@ -39,6 +39,7 @@
                         </ol>
                     <li>Bootstrap: button, input, grid system</li>
                     <li>Bootstrap modal alert to confirm the delete action</li>
+                    <li>Add options to display the list in asc/desc order</li>
                 </ul>
             </div>
             <div class="col-md-12 col-lg-8">
@@ -47,13 +48,19 @@
                     <button id="submitNewTask" class="btn btn-info">Create Task</button>
                 </div>
 
+                <div id="radioButtons">
+                    <span id="displayOption">Display Options:</span>
+                    <input class="radioInput" type="radio" name="order" value="DESC" checked>Descending by entering order</input>
+                    <input class="radioInput" type="radio" name="order" value="ASC">Ascending by entering order</input>
+                    <button id="submitOrder" class="btn btn-info">Confirm</button>
+                </div>
+
                 <div id="tasksDiv">
 
                     <table id="taskTable" class="shadow p-3 mb-5 bg-white rounded">
                         <tbody id="tasksTableBody">
 
                         </tbody>
-
                     </table>
                 </div>
             </div>
