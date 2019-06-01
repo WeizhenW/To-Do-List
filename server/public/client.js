@@ -5,6 +5,7 @@ function onReady() {
     displayAllTasks();
     $('#submitNewTask').on('click', addTask);
     $('#tasksUl').on('click', '.completeButton', completeTask);
+    $('#tasksUl').on('click', '.deleteButton', deleteTask);
 }
 
 //function to get all the tasks and append to the DOM
@@ -64,6 +65,23 @@ function completeTask() {
     let idClicked = $(this).data().id;
     $.ajax({
         method: 'PUT',
+        url: '/tasks/'+idClicked
+    }).then(
+        () => {
+            displayAllTasks();
+        }
+    ).catch(
+        error => {
+            console.log(error);
+        }
+    )
+}
+
+//function to delete task
+function deleteTask() {
+    let idClicked = $(this).data().id;
+    $.ajax({
+        method: 'DELETE',
         url: '/tasks/'+idClicked
     }).then(
         () => {

@@ -66,6 +66,23 @@ app.put('/tasks/:id', (req, res) => {
     )
 })
 
+//delete route to delete task from database
+app.delete('/tasks/:id', (req, res) => {
+    pool.query(`
+    DELETE FROM "tasks" WHERE "id" = $1;`, 
+    [req.params.id])
+    .then(
+        () => {
+            res.sendStatus(200);
+        }
+    ).catch(
+        error => {
+            console.log('error with delete', error);
+            res.sendStatus(500);
+        }
+    )
+})
+
 //server running
 app.listen(PORT, () => {
     console.log('server running on', PORT);
