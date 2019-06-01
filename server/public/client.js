@@ -20,16 +20,16 @@ function displayAllTasks() {
                     $('#tasksTableBody').append(`
                     <tr>
                         <td class="taskCompleted">${task.task}</td>
-                        <td><button class="completeButton btn btn-secondary" data-id='${task.id}' data-complete='${task.is_completed}'>Completed</button></td>
-                        <td><button class="deleteButton btn btn-danger" data-id='${task.id}'>Delete Task</button></td>
+                        <td><button class="completeButton btn btn-secondary" data-id="${task.id}" data-complete="${task.is_completed}">Completed</button></td>
+                        <td><button class="deleteButton btn btn-danger" data-id="${task.id}" data-toggle="modal" data-target="#exampleModal">Delete Task</button></td>
                     </tr>
                 `)
                 } else {
                     $('#tasksTableBody').append(`
                     <tr>
                         <td>${task.task}</td>
-                        <td><button class="completeButton btn btn-success" data-id='${task.id}' data-complete='${task.is_completed}'>To Complete</button></td>
-                        <td><button class="deleteButton btn btn-danger" data-id='${task.id}'>Delete Task</button></td>
+                        <td><button class="completeButton btn btn-success" data-id="${task.id}" data-complete='${task.is_completed}'>To Complete</button></td>
+                        <td><button class="deleteButton btn btn-danger" data-id="${task.id}" data-toggle="modal" data-target="#exampleModal">Delete Task</button></td>
                     </tr>
                 `)
                 }
