@@ -53,7 +53,7 @@ app.post('/tasks', (req, res) => {
 //put route to update the complete status
 app.put('/tasks/:id', (req, res) => {
     pool.query(`
-    UPDATE "tasks" SET "is_completed"=true WHERE "id"=$1;`, [req.params.id])
+    UPDATE "tasks" SET "is_completed"=$1 WHERE "id"=$2;`, [req.body.is_completed, req.params.id])
     .then(
         () => {
             res.sendStatus(200);

@@ -19,17 +19,17 @@ function displayAllTasks() {
                 if(task.is_completed) {
                     $('#tasksTableBody').append(`
                     <tr>
-                        <td class="completed">${task.task}</td>
-                        <td><button class="completedButton" data-id='${task.id}' disabled   >Task Completed</button></td>
-                        <td><button class="deleteButton" data-id='${task.id}'>Delete Task</button></td>
+                        <td class="taskCompleted">${task.task}</td>
+                        <td><button class="completeButton btn btn-secondary" data-id='${task.id}' data-complete='${task.is_completed}'>Completed</button></td>
+                        <td><button class="deleteButton btn btn-danger" data-id='${task.id}'>Delete Task</button></td>
                     </tr>
                 `)
                 } else {
                     $('#tasksTableBody').append(`
                     <tr>
                         <td>${task.task}</td>
-                        <td><button class="completeButton" data-id='${task.id}'>Task Completed</button></td>
-                        <td><button class="deleteButton" data-id='${task.id}'>Delete Task</button></td>
+                        <td><button class="completeButton btn btn-success" data-id='${task.id}' data-complete='${task.is_completed}'>To Complete</button></td>
+                        <td><button class="deleteButton btn btn-danger" data-id='${task.id}'>Delete Task</button></td>
                     </tr>
                 `)
                 }
@@ -64,9 +64,21 @@ function addTask() {
 //function to set a task complete
 function completeTask() {
     let idClicked = $(this).data().id;
+    let is_completed = true;
+    console.log($(this).data().complete)
+    if($(this).data().complete){
+        console.log('in if')
+        is_completed = false;
+    } else {
+        console.log('in else')
+        is_completed = true;
+    }
     $.ajax({
         method: 'PUT',
-        url: '/tasks/'+idClicked
+        url: '/tasks/'+idClicked,
+        data: {
+            is_completed: is_completed
+        }
     }).then(
         () => {
             displayAllTasks();
