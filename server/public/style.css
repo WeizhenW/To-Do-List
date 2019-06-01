@@ -16,14 +16,11 @@ h1 {
     font-size: 20px;
 }
 
-#functionality {
-    /* margin-right: 10px; */
-    /* padding: 10px; */
-}
-
 #taskIn {
     padding: 5px; 
     width: 100%;
+    height: 50px;
+    box-shadow: 2px 0px 8px #888888;
 }
 
 #submitNewTask {
