@@ -25,6 +25,24 @@ h1 {
 
 #submitNewTask {
     margin-top: 20px;
+    width: 120px;
+}
+
+#displayOption {
+    font-weight: bold;
+    text-decoration: underline;
+}
+#radioButtons {
+    margin-top: 50px;
+    font-size: 16px;
+}
+
+.radioInput {
+    margin: 15px;
+}
+
+#submitOrder {
+    width: 120px;
 }
 
 
@@ -39,7 +57,7 @@ h1 {
 
 table {
     border: 1px grey solid;
-    margin-top: 50px;
+    margin-top: 30px;
     margin-bottom: 50px;
     width: 100%;
 
