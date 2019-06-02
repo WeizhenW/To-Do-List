@@ -15,6 +15,10 @@ function onReady() {
     $('.confirmDeleteButton').on('click', deleteTask);
     //button click to change the order of the display
     $('#submitOrder').on('click', newDisplayOrder);
+    //button click to filter on due date
+    $('#submitFilter').on('click', filterDueDate);
+    //button click to display all tasks
+    $('#displayAll').on('click', displayAllTasks);
 }
 
 //function to get all the tasks and append to the DOM
@@ -27,7 +31,7 @@ function displayAllTasks() {
             $('#tasksTableBody').empty();
             response.forEach(task => {
                 let taskDueDate = '';
-                if(task.due_date == null) {
+                if (task.due_date == null) {
                     taskDueDate = '';
                 } else {
                     taskDueDate = task.due_date.slice(0, 10);
@@ -35,7 +39,7 @@ function displayAllTasks() {
                 //check the status of the task
                 //if completed => text on the button will show as "completed"
                 //if not completed => text on the button will show as "to complete"
-                if(task.is_completed) {
+                if (task.is_completed) {
                     $('#tasksTableBody').append(`
                     <tr>
                         <td class="taskCompleted">${task.task}</td>
@@ -54,8 +58,8 @@ function displayAllTasks() {
                     </tr>
                 `)
                 }
-              
-               
+
+
             })
         }
     )
@@ -65,10 +69,10 @@ function displayAllTasks() {
 function addTask() {
     $('.warning').html('');
     let newTask = $('#taskIn').val();
-    if(newTask === '') {
+    if (newTask === '') {
         $('#taskIn').after(`<p class="warning">Input can not be empty</p>`);
         return;
-    } else if(newTask.length >128) {
+    } else if (newTask.length > 128) {
         $('#taskIn').after(`<p class="warning">Input is too long</p>`);
         return;
     }
@@ -85,7 +89,7 @@ function addTask() {
             $('#taskIn').val('');
             $('#dueDate').val('');
             displayAllTasks();
-            
+
         }
     ).catch(
         error => {
@@ -97,14 +101,14 @@ function addTask() {
 function completeTask() {
     let idClicked = $(this).data().id;
     let is_completed = true;
-    if($(this).data().complete){
+    if ($(this).data().complete) {
         is_completed = false;
     } else {
         is_completed = true;
     }
     $.ajax({
         method: 'PUT',
-        url: '/tasks/'+idClicked,
+        url: '/tasks/' + idClicked,
         data: {
             is_completed: is_completed
         }
@@ -123,7 +127,7 @@ function completeTask() {
 function deleteTask() {
     $.ajax({
         method: 'DELETE',
-        url: '/tasks/'+idToDelete //use the id passed by the getIdToDelete function
+        url: '/tasks/' + idToDelete //use the id passed by the getIdToDelete function
     }).then(
         () => {
             displayAllTasks();
@@ -146,3 +150,50 @@ function newDisplayOrder() {
     orderEntered = $("input[name='order']:checked").val();
     displayAllTasks();
 }
+
+//function to filter on due date
+function filterDueDate() {
+    let dueDateInquired = $('#dueDateInput').val();
+    $.ajax({
+        method: 'GET',
+        url: '/tasks/filter?duedate=' + dueDateInquired
+    }).then(
+        (response) => {
+            $('#dueDateInput').val('');
+            $('#tasksTableBody').empty();
+            response.forEach(task => {
+                let taskDueDate = '';
+                if (task.due_date == null) {
+                    taskDueDate = '';
+                } else {
+                    taskDueDate = task.due_date.slice(0, 10);
+                }
+                //check the status of the task
+                //if completed => text on the button will show as "completed"
+                //if not completed => text on the button will show as "to complete"
+                if (task.is_completed) {
+                    $('#tasksTableBody').append(`
+                    <tr>
+                        <td class="taskCompleted">${task.task}</td>
+                        <td class="taskDueDate">${taskDueDate}</td>
+                        <td><button class="completeButton btn btn-secondary" data-id="${task.id}" data-complete="${task.is_completed}">Reset</button></td>
+                        <td><button class="deleteButton btn btn-danger" data-id="${task.id}" data-toggle="modal" data-target="#exampleModal">Delete</button></td>
+                    </tr>
+                `)
+                } else {
+                    $('#tasksTableBody').append(`
+                    <tr>
+                        <td>${task.task}</td>
+                        <td class="taskDueDate">${taskDueDate}</td>
+                        <td><button class="completeButton btn btn-success" data-id="${task.id}" data-complete='${task.is_completed}'>Complete</button></td>
+                        <td><button class="deleteButton btn btn-danger" data-id="${task.id}" data-toggle="modal" data-target="#exampleModal">Delete</button></td>
+                    </tr>
+                `)
+                }
+
+
+            })
+        }
+    )
+}
+    

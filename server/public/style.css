@@ -65,6 +65,22 @@ label {
     margin: 15px;
 }
 
+#filterOption {
+    margin-top: 20px;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+#submitFilter {
+    margin-top: 20px;
+}
+
+#displayAll {
+    margin-left: 30px;
+    margin-top: 20px;
+    width: 100px;
+}
+
 
 .taskCompleted {
     text-decoration: line-through;

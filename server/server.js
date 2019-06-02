@@ -83,6 +83,22 @@ app.delete('/tasks/:id', (req, res) => {
     )
 })
 
+//get route to retrieve the tasks from database based on due date
+app.get('/tasks/filter', (req, res) => {
+    
+    pool.query(`SELECT * FROM "tasks" WHERE "due_date" = '${req.query.duedate}';
+    `).then(
+        result => {
+            res.send(result.rows);
+        }
+    ).catch(
+        error => {
+            console.log('error with get route', error);
+            res.sendStatus(500);
+        }
+    )
+})
+
 //server running
 app.listen(PORT, () => {
     console.log('server running on', PORT);
