@@ -18,7 +18,7 @@ const config = {
 
 const pool = new Pool(config);
 
-//get route to retrieve all the tasks from database, and send back to client
+//get route to retrieve all the tasks from database, order by id, and send back to client
 app.get('/tasks', (req, res) => {
     pool.query(`SELECT * FROM "tasks" ORDER BY "id" ${req.query.order};
     `).then(
@@ -50,7 +50,7 @@ app.post('/tasks', (req, res) => {
     )
 })
 
-//put route to update the complete status
+//put route to update the task status for a specific task
 app.put('/tasks/:id', (req, res) => {
     pool.query(`
     UPDATE "tasks" SET "is_completed"=$1 WHERE "id"=$2;`, [req.body.is_completed, req.params.id])
@@ -66,7 +66,7 @@ app.put('/tasks/:id', (req, res) => {
     )
 })
 
-//delete route to delete task from database
+//delete route to delete a task from database
 app.delete('/tasks/:id', (req, res) => {
     pool.query(`
     DELETE FROM "tasks" WHERE "id" = $1;`, 
@@ -83,7 +83,7 @@ app.delete('/tasks/:id', (req, res) => {
     )
 })
 
-//get route to retrieve the tasks from database based on due date
+//get route to retrieve the tasks from database filtered by due date and order by id either asc or desc
 app.get('/tasks/filter', (req, res) => {  
     pool.query(`SELECT * FROM "tasks" WHERE "due_date" = '${req.query.duedate}' ORDER BY "id" ${req.query.order};
     `).then(

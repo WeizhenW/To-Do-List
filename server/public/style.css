@@ -13,7 +13,6 @@
 h1 {
     font-size: 60px;
     font-weight: 400;
-    display: inline-block;
 }
 
 #subtitle {
@@ -22,7 +21,7 @@ h1 {
 
 #taskInput {
     width: 100%;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 #taskIn {
@@ -38,7 +37,7 @@ h1 {
 }
 
 label {
-    margin-top: 20px;
+    margin-top: 10px;
     font-weight: bold;
 }
 
@@ -54,7 +53,6 @@ label {
     font-weight: bold;
 }
 #radioButtons {
-    top: 150px;
     font-size: 16px;
     margin-top: 50px;
 }
@@ -69,15 +67,14 @@ label {
 }
 
 #submitFilter {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 #displayAll {
-    margin-left: 30px;
-    margin-top: 10px;
+    margin-left: 20px;
+    margin-top: 20px;
     width: 100px;
 }
-
 
 .taskCompleted {
     text-decoration: line-through;
@@ -109,9 +106,8 @@ tr:nth-child(even) {
     background-color: honeydew;
 }
 
-
 td {
-    padding: 10px;
+    padding: 5px;
     font-size: 16px;
 }
 

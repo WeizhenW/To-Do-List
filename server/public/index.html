@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- link bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/4d97944369.js"></script>
     <script src="jquery-3.4.1.min.js"></script>
     <script src="client.js"></script>
     <title>To-Do-List</title>
@@ -21,6 +20,7 @@
     </div>
 
     <div class="container">
+        <!-- use bootstrap grid system: 2 columns -->
         <div class="row">
             <div id="functionality" class="col-md-12 col-lg-4">
                     <div id="taskInput">
@@ -37,12 +37,12 @@
                         <br>
                         <input class="radioInput" type="radio" name="order" value="ASC">Ascending by entering order</input>                    
                     
-                        <p id="filterOption">Due Date</p> <span><input type="date" id="dueDateInput"></span>
-                        <p id="dueDateWarning" class="warning"></p>
+                        <p id="filterOption">Due Date</p><input type="date" id="dueDateInput">
                         <br>
                         <button id="submitFilter" class="btn btn-info">Refresh</button>
                         <button id="displayAll" class="btn btn-info">Display All</button>
                     </div>
+                <!-- below note down all the functionalities added to the app     -->
                 <h3>Functionalities</h3>
                 <ul>
                     <li>Add new todo from input field to the list and to database</li>
@@ -52,7 +52,7 @@
                             <li>set a task to complete</li>
                             <li>reset the status to incomplete</li>
                         </ol>
-                    <li>Task completed:
+                    <li>For task completed:
                         <ol>
                             <li>button color changed to grey</li>
                             <li>button text changed to "reset"</li>
@@ -64,6 +64,7 @@
                     <li>Enter and show due date</li>
                     <li>Display by ascending or descending order</li>
                     <li>Display filtered by due date</li>
+                    <li>Warning in case the required due date is not entered</li>
                 </ul>
             </div>
             <div class="col-md-12 col-lg-8">

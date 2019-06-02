@@ -1,20 +1,18 @@
 $(document).ready(onReady);
 //declare global variable to store the id of the task to be deleted
 let idToDelete = 0;
-let orderEntered = 'DESC';
+let orderEntered = 'DESC';//default to descending display
 
 function onReady() {
     displayAllTasks();
-    //button click to add task button to add new task to the table
+    //button click to add new task to the table
     $('#submitNewTask').on('click', addTask);
-    //button click to complete button to toggle the task status
+    //button click to toggle the task status
     $('#tasksTableBody').on('click', '.completeButton', completeTask);
-    //button click to delete button to get the id of the task
+    //button click to get the id of the task
     $('#tasksTableBody').on('click', '.deleteButton', getIdToDelete);
-    //button click to actually delete the task
+    //button click from the modal to actually delete the task
     $('.confirmDeleteButton').on('click', deleteTask);
-    //button click to get the required display order
-    $('#submitOrder').on('click', newDisplayOrder);
     //button click to apply the filter
     $('#submitFilter').on('click', filteredTasksDisplay);
     //button click to display all tasks
@@ -25,21 +23,23 @@ function onReady() {
 function displayAllTasks() {
     $.ajax({
         method: 'GET',
-        url: '/tasks?order=' + orderEntered
+        url: '/tasks?order=' + orderEntered //default order descending
     }).then(
         response => {
             $('#tasksTableBody').empty();
             response.forEach(task => {
                 let taskDueDate = '';
+                //if due date is empty, display nothing; else display format yyyy-mm-dd
                 if (task.due_date == null) {
                     taskDueDate = '';
                 } else {
                     taskDueDate = task.due_date.slice(0, 10);
                 }
                 //check the status of the task
-                //if completed => text on the button will show as "completed"
-                //if not completed => text on the button will show as "to complete"
+                //if completed => text on the button will show as "reset"
+                //if not completed => text on the button will show as "complete"
                 if (task.is_completed) {
+                    //append rows to DOM and add data() method to the complete button with value = is_completed
                     $('#tasksTableBody').append(`
                     <tr>
                         <td class="taskCompleted">${task.task}</td>
@@ -58,8 +58,6 @@ function displayAllTasks() {
                     </tr>
                 `)
                 }
-
-
             })
         }
     )
@@ -69,14 +67,16 @@ function displayAllTasks() {
 function addTask() {
     $('.warning').html('');
     let newTask = $('#taskIn').val();
-    if (newTask === '') {
-        $('#taskIn').after(`<p class="warning">Input can not be empty</p>`);
+    let taskDueDate = $('#dueDate').val();
+
+    //show warning in case of empty input and exit the function
+    if (newTask === '' || taskDueDate === '') {
+        $('#submitNewTask').after(`<p class="warning">Input can not be empty</p>`);
         return;
-    } else if (newTask.length > 128) {
-        $('#taskIn').after(`<p class="warning">Input is too long</p>`);
+    } else if (newTask.length > 128) {//show warning in case of length>128 and exit function
+        $('#submitNewTask').after(`<p class="warning">Input is too long</p>`);
         return;
     }
-    let taskDueDate = $('#dueDate').val();
     $.ajax({
         method: 'POST',
         url: '/tasks',
@@ -89,7 +89,6 @@ function addTask() {
             $('#taskIn').val('');
             $('#dueDate').val('');
             displayAllTasks();
-
         }
     ).catch(
         error => {
@@ -101,6 +100,7 @@ function addTask() {
 function completeTask() {
     let idClicked = $(this).data().id;
     let is_completed = true;
+    //toggle the status of the task
     if ($(this).data().complete) {
         is_completed = false;
     } else {
@@ -145,24 +145,18 @@ function getIdToDelete() {
     return idToDelete;
 }
 
-//function to switch a new display order and reload the page
-function newDisplayOrder() {
-   
-    displayAllTasks();
-}
-
-//function to filter on due date
+//function to filter on due date and follow specific display order
 function filteredTasksDisplay() {
-    let dueDateInquired = $('#dueDateInput').val();
-    orderEntered = $("input[name='order']:checked").val();
-    console.log(dueDateInquired, orderEntered);
-
+    let dueDateInquired = $('#dueDateInput').val();//get required due date
+    orderEntered = $("input[name='order']:checked").val();//get required order
+    //show warning in case of due date empty and exit function
     if(dueDateInquired==='') {
-        $('#dueDateWarning').append('please enter a due date');
+        $('#displayAll').after('<p class="warning" id="dueDateWarning">Please enter a due date</p>');
         return;
     }
     $.ajax({
         method: 'GET',
+        //pass due date and order required to server via req.query
         url: '/tasks/filter?duedate=' + dueDateInquired + '&order=' + orderEntered
     }).then(
         (response) => {
@@ -176,9 +170,7 @@ function filteredTasksDisplay() {
                 } else {
                     taskDueDate = task.due_date.slice(0, 10);
                 }
-                //check the status of the task
-                //if completed => text on the button will show as "completed"
-                //if not completed => text on the button will show as "to complete"
+                //append the result to DOM
                 if (task.is_completed) {
                     $('#tasksTableBody').append(`
                     <tr>
@@ -198,8 +190,6 @@ function filteredTasksDisplay() {
                     </tr>
                 `)
                 }
-
-
             })
         }
     )
