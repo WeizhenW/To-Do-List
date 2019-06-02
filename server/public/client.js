@@ -35,16 +35,16 @@ function displayAllTasks() {
                     $('#tasksTableBody').append(`
                     <tr>
                         <td class="taskCompleted">${task.task}</td>
-                        <td><button class="completeButton btn btn-secondary" data-id="${task.id}" data-complete="${task.is_completed}">Completed</button></td>
-                        <td><button class="deleteButton btn btn-danger" data-id="${task.id}" data-toggle="modal" data-target="#exampleModal">Delete Task</button></td>
+                        <td><button class="completeButton btn btn-secondary" data-id="${task.id}" data-complete="${task.is_completed}">Reset</button></td>
+                        <td><button class="deleteButton btn btn-danger" data-id="${task.id}" data-toggle="modal" data-target="#exampleModal">Delete</button></td>
                     </tr>
                 `)
                 } else {
                     $('#tasksTableBody').append(`
                     <tr>
                         <td>${task.task}</td>
-                        <td><button class="completeButton btn btn-success" data-id="${task.id}" data-complete='${task.is_completed}'>To Complete</button></td>
-                        <td><button class="deleteButton btn btn-danger" data-id="${task.id}" data-toggle="modal" data-target="#exampleModal">Delete Task</button></td>
+                        <td><button class="completeButton btn btn-success" data-id="${task.id}" data-complete='${task.is_completed}'>Complete</button></td>
+                        <td><button class="deleteButton btn btn-danger" data-id="${task.id}" data-toggle="modal" data-target="#exampleModal">Delete</button></td>
                     </tr>
                 `)
                 }
@@ -57,7 +57,15 @@ function displayAllTasks() {
 
 //function to add new task to the list
 function addTask() {
+    $('.warning').html('');
     let newTask = $('#taskIn').val();
+    if(newTask === '') {
+        $('#taskIn').after(`<p class="warning">Input can not be empty</p>`);
+        return;
+    } else if(newTask.length >128) {
+        $('#taskIn').after(`<p class="warning">Input is too long</p>`);
+        return;
+    }
     $.ajax({
         method: 'POST',
         url: '/tasks',
