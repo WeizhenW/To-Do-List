@@ -85,6 +85,10 @@ label {
     background-color: grey;
 }
 
+.overDue {
+    color: red;
+}
+
 table {
     border: 1px grey solid;
     margin-top: 30px;

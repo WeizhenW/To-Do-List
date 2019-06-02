@@ -36,7 +36,6 @@
                         <input class="radioInput" type="radio" name="order" value="DESC" checked>Descending by entering order</input>
                         <br>
                         <input class="radioInput" type="radio" name="order" value="ASC">Ascending by entering order</input>                    
-                    
                         <p id="filterOption">Due Date</p><input type="date" id="dueDateInput">
                         <br>
                         <button id="submitFilter" class="btn btn-info">Refresh</button>
@@ -65,13 +64,11 @@
                     <li>Display by ascending or descending order</li>
                     <li>Display filtered by due date</li>
                     <li>Warning in case the required due date is not entered</li>
+                    <li>If a task is overdue and not completed, show color red</li>
                 </ul>
             </div>
             <div class="col-md-12 col-lg-8">
-                
-
                 <div id="tasksDiv">
-
                     <table id="taskTable" class="shadow p-3 mb-5 bg-white rounded">
                         <thead>
                             <tr>
@@ -82,7 +79,6 @@
                             </tr>
                         </thead>
                         <tbody id="tasksTableBody">
-
                         </tbody>
                     </table>
                 </div>

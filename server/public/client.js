@@ -28,13 +28,11 @@ function displayAllTasks() {
         response => {
             $('#tasksTableBody').empty();
             response.forEach(task => {
-                let taskDueDate = '';
-                //if due date is empty, display nothing; else display format yyyy-mm-dd
-                if (task.due_date == null) {
-                    taskDueDate = '';
-                } else {
-                    taskDueDate = task.due_date.slice(0, 10);
-                }
+                let taskDueDate = new Date(task.due_date.slice(0,10));
+                let dateToDisplay = taskDueDate.toString().slice(0, 15);
+                console.log(task.due_date);
+                console.log(typeof taskDueDate);
+                
                 //check the status of the task
                 //if completed => text on the button will show as "reset"
                 //if not completed => text on the button will show as "complete"
@@ -43,20 +41,32 @@ function displayAllTasks() {
                     $('#tasksTableBody').append(`
                     <tr>
                         <td class="taskCompleted">${task.task}</td>
-                        <td class="taskDueDate">${taskDueDate}</td>
+                        <td class="taskDueDate">${dateToDisplay}</td>
                         <td><button class="completeButton btn btn-secondary" data-id="${task.id}" data-complete="${task.is_completed}">Reset</button></td>
                         <td><button class="deleteButton btn btn-danger" data-id="${task.id}" data-toggle="modal" data-target="#exampleModal">Delete</button></td>
                     </tr>
                 `)
                 } else {
-                    $('#tasksTableBody').append(`
-                    <tr>
-                        <td>${task.task}</td>
-                        <td class="taskDueDate">${taskDueDate}</td>
-                        <td><button class="completeButton btn btn-success" data-id="${task.id}" data-complete='${task.is_completed}'>Complete</button></td>
-                        <td><button class="deleteButton btn btn-danger" data-id="${task.id}" data-toggle="modal" data-target="#exampleModal">Delete</button></td>
-                    </tr>
-                `)
+                    if(taskDueDate.toDateString() >= (new Date()).toDateString()){
+                        $('#tasksTableBody').append(`
+                        <tr>
+                            <td>${task.task}</td>
+                            <td class="taskDueDate">${dateToDisplay}</td>
+                            <td><button class="completeButton btn btn-success" data-id="${task.id}" data-complete='${task.is_completed}'>Complete</button></td>
+                            <td><button class="deleteButton btn btn-danger" data-id="${task.id}" data-toggle="modal" data-target="#exampleModal">Delete</button></td>
+                        </tr>
+                    `)
+                    } else {
+                        $('#tasksTableBody').append(`
+                        <tr>
+                            <td class="overDue">${task.task}</td>
+                            <td class="taskDueDate overDue">${dateToDisplay}</td>
+                            <td><button class="completeButton btn btn-success" data-id="${task.id}" data-complete='${task.is_completed}'>Complete</button></td>
+                            <td><button class="deleteButton btn btn-danger" data-id="${task.id}" data-toggle="modal" data-target="#exampleModal">Delete</button></td>
+                        </tr>
+                        `)
+                    }
+                
                 }
             })
         }
