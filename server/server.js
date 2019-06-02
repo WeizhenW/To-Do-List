@@ -36,8 +36,8 @@ app.get('/tasks', (req, res) => {
 //post route to get new task from client and insert to database
 app.post('/tasks', (req, res) => {
     pool.query(`
-    INSERT INTO "tasks" ("task", "is_completed")
-    VALUES ($1, false);`, [req.body.task])
+    INSERT INTO "tasks" ("task", "is_completed", "due_date")
+    VALUES ($1, false, $2);`, [req.body.task, req.body.due_date])
     .then(
         () => {
             res.sendStatus(200);

@@ -25,9 +25,13 @@ function displayAllTasks() {
     }).then(
         response => {
             $('#tasksTableBody').empty();
-            // let order=$('.radioInput').val();
-            // console.log(order);
             response.forEach(task => {
+                let taskDueDate = '';
+                if(task.due_date == null) {
+                    taskDueDate = '';
+                } else {
+                    taskDueDate = task.due_date.slice(0, 10);
+                }
                 //check the status of the task
                 //if completed => text on the button will show as "completed"
                 //if not completed => text on the button will show as "to complete"
@@ -35,6 +39,7 @@ function displayAllTasks() {
                     $('#tasksTableBody').append(`
                     <tr>
                         <td class="taskCompleted">${task.task}</td>
+                        <td class="taskDueDate">${taskDueDate}</td>
                         <td><button class="completeButton btn btn-secondary" data-id="${task.id}" data-complete="${task.is_completed}">Reset</button></td>
                         <td><button class="deleteButton btn btn-danger" data-id="${task.id}" data-toggle="modal" data-target="#exampleModal">Delete</button></td>
                     </tr>
@@ -43,6 +48,7 @@ function displayAllTasks() {
                     $('#tasksTableBody').append(`
                     <tr>
                         <td>${task.task}</td>
+                        <td class="taskDueDate">${taskDueDate}</td>
                         <td><button class="completeButton btn btn-success" data-id="${task.id}" data-complete='${task.is_completed}'>Complete</button></td>
                         <td><button class="deleteButton btn btn-danger" data-id="${task.id}" data-toggle="modal" data-target="#exampleModal">Delete</button></td>
                     </tr>
@@ -66,15 +72,18 @@ function addTask() {
         $('#taskIn').after(`<p class="warning">Input is too long</p>`);
         return;
     }
+    let taskDueDate = $('#dueDate').val();
     $.ajax({
         method: 'POST',
         url: '/tasks',
         data: {
-            task: newTask
+            task: newTask,
+            due_date: taskDueDate
         }
     }).then(
         () => {
             $('#taskIn').val('');
+            $('#dueDate').val('');
             displayAllTasks();
             
         }
