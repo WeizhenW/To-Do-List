@@ -84,9 +84,8 @@ app.delete('/tasks/:id', (req, res) => {
 })
 
 //get route to retrieve the tasks from database based on due date
-app.get('/tasks/filter', (req, res) => {
-    
-    pool.query(`SELECT * FROM "tasks" WHERE "due_date" = '${req.query.duedate}';
+app.get('/tasks/filter', (req, res) => {  
+    pool.query(`SELECT * FROM "tasks" WHERE "due_date" = '${req.query.duedate}' ORDER BY "id" ${req.query.order};
     `).then(
         result => {
             res.send(result.rows);

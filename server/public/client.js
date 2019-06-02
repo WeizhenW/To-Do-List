@@ -13,10 +13,10 @@ function onReady() {
     $('#tasksTableBody').on('click', '.deleteButton', getIdToDelete);
     //button click to actually delete the task
     $('.confirmDeleteButton').on('click', deleteTask);
-    //button click to change the order of the display
+    //button click to get the required display order
     $('#submitOrder').on('click', newDisplayOrder);
-    //button click to filter on due date
-    $('#submitFilter').on('click', filterDueDate);
+    //button click to apply the filter
+    $('#submitFilter').on('click', filteredTasksDisplay);
     //button click to display all tasks
     $('#displayAll').on('click', displayAllTasks);
 }
@@ -147,19 +147,27 @@ function getIdToDelete() {
 
 //function to switch a new display order and reload the page
 function newDisplayOrder() {
-    orderEntered = $("input[name='order']:checked").val();
+   
     displayAllTasks();
 }
 
 //function to filter on due date
-function filterDueDate() {
+function filteredTasksDisplay() {
     let dueDateInquired = $('#dueDateInput').val();
+    orderEntered = $("input[name='order']:checked").val();
+    console.log(dueDateInquired, orderEntered);
+
+    if(dueDateInquired==='') {
+        $('#dueDateWarning').append('please enter a due date');
+        return;
+    }
     $.ajax({
         method: 'GET',
-        url: '/tasks/filter?duedate=' + dueDateInquired
+        url: '/tasks/filter?duedate=' + dueDateInquired + '&order=' + orderEntered
     }).then(
         (response) => {
             $('#dueDateInput').val('');
+            $('#dueDateWarning').empty();
             $('#tasksTableBody').empty();
             response.forEach(task => {
                 let taskDueDate = '';

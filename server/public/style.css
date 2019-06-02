@@ -39,7 +39,6 @@ h1 {
 
 label {
     margin-top: 20px;
-    text-decoration: underline;
     font-weight: bold;
 }
 
@@ -53,7 +52,6 @@ label {
 
 #displayOption {
     font-weight: bold;
-    text-decoration: underline;
 }
 #radioButtons {
     top: 150px;
@@ -62,22 +60,21 @@ label {
 }
 
 .radioInput {
-    margin: 15px;
+    margin: 10px;
 }
 
 #filterOption {
     margin-top: 20px;
-    text-decoration: underline;
     font-weight: bold;
 }
 
 #submitFilter {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 #displayAll {
     margin-left: 30px;
-    margin-top: 20px;
+    margin-top: 10px;
     width: 100px;
 }
 
