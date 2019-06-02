@@ -36,8 +36,8 @@ app.get('/tasks', (req, res) => {
 //post route to get new task from client and insert to database
 app.post('/tasks', (req, res) => {
     pool.query(`
-    INSERT INTO "tasks" ("task", "is_completed")
-    VALUES ($1, false);`, [req.body.task])
+    INSERT INTO "tasks" ("task", "is_completed", "due_date")
+    VALUES ($1, false, $2);`, [req.body.task, req.body.due_date])
     .then(
         () => {
             res.sendStatus(200);
@@ -78,6 +78,21 @@ app.delete('/tasks/:id', (req, res) => {
     ).catch(
         error => {
             console.log('error with delete', error);
+            res.sendStatus(500);
+        }
+    )
+})
+
+//get route to retrieve the tasks from database based on due date
+app.get('/tasks/filter', (req, res) => {  
+    pool.query(`SELECT * FROM "tasks" WHERE "due_date" = '${req.query.duedate}' ORDER BY "id" ${req.query.order};
+    `).then(
+        result => {
+            res.send(result.rows);
+        }
+    ).catch(
+        error => {
+            console.log('error with get route', error);
             res.sendStatus(500);
         }
     )

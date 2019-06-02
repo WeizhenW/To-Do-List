@@ -18,7 +18,6 @@ h1 {
 
 #subtitle {
     font-size: 20px;
-    /* color: #888888; */
 }
 
 #taskInput {
@@ -32,6 +31,17 @@ h1 {
     box-shadow: 2px 0px 8px #888888;
 }
 
+#dueDate {
+    padding: 5px; 
+    height: 50px;
+    box-shadow: 2px 0px 8px #888888;
+}
+
+label {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
 .warning {
     color: red;
 }
@@ -42,7 +52,6 @@ h1 {
 
 #displayOption {
     font-weight: bold;
-    text-decoration: underline;
 }
 #radioButtons {
     top: 150px;
@@ -51,7 +60,22 @@ h1 {
 }
 
 .radioInput {
-    margin: 15px;
+    margin: 10px;
+}
+
+#filterOption {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+#submitFilter {
+    margin-top: 10px;
+}
+
+#displayAll {
+    margin-left: 30px;
+    margin-top: 10px;
+    width: 100px;
 }
 
 
@@ -73,6 +97,14 @@ table {
 
 }
 
+thead tr {
+    border: 1px grey solid;
+    text-align: center;
+    background: grey;
+    color: white;
+    height: 40px;
+}
+
 tr:nth-child(even) {
     background-color: honeydew;
 }
@@ -80,12 +112,13 @@ tr:nth-child(even) {
 
 td {
     padding: 10px;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .btn {
     opacity: 0.75;
-    width: 120px;
+    width: 80px;
+    font-size: 14px;
 }
 
 h3 {
