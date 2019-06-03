@@ -1,7 +1,6 @@
 CREATE TABLE "tasks" (
 	"id" SERIAL PRIMARY KEY,
 	"task" VARCHAR(128),
-	"is_completed" BOOL
+	"is_completed" BOOL,
+	"due_date" DATE
 	);
-
-ALTER TABLE "tasks" ADD COLUMN "due_date" DATE;
