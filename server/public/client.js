@@ -28,10 +28,8 @@ function displayAllTasks() {
         response => {
             $('#tasksTableBody').empty();
             response.forEach(task => {
-                let taskDueDate = new Date(task.due_date.slice(0,10));
+                let taskDueDate = new Date(task.due_date);
                 let dateToDisplay = taskDueDate.toString().slice(0, 15);
-                console.log(task.due_date);
-                console.log(typeof taskDueDate);
                 
                 //check the status of the task
                 //if completed => text on the button will show as "reset"
@@ -47,7 +45,7 @@ function displayAllTasks() {
                     </tr>
                 `)
                 } else {
-                    if(taskDueDate.toDateString() >= (new Date()).toDateString()){
+                    if(taskDueDate.toLocaleDateString() >= (new Date()).toLocaleDateString()){
                         $('#tasksTableBody').append(`
                         <tr>
                             <td>${task.task}</td>
@@ -157,6 +155,7 @@ function getIdToDelete() {
 
 //function to filter on due date and follow specific display order
 function filteredTasksDisplay() {
+    $('#dueDateWarning').empty();
     let dueDateInquired = $('#dueDateInput').val();//get required due date
     orderEntered = $("input[name='order']:checked").val();//get required order
     //show warning in case of due date empty and exit function
@@ -171,7 +170,6 @@ function filteredTasksDisplay() {
     }).then(
         (response) => {
             $('#dueDateInput').val('');
-            $('#dueDateWarning').empty();
             $('#tasksTableBody').empty();
             response.forEach(task => {
                 let taskDueDate = '';
